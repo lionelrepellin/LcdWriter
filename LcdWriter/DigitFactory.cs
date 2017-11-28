@@ -28,14 +28,14 @@ namespace LcdWriter
 			};
 		}
 
-		public Digit FindById(int id)
+		public Digit FindByNumber(int number)
 		{
-			if (_dictionary.ContainsKey(id))
+			if (_dictionary.ContainsKey(number))
 			{
-				return (Digit)Activator.CreateInstance(_dictionary[id]);
+				return (Digit)Activator.CreateInstance(_dictionary[number]);
 			}
 
-			throw new ArgumentOutOfRangeException(nameof(id), "Only numbers between 0 and 9 are allowed.");
+			throw new ArgumentOutOfRangeException(nameof(number), "Only numbers between 0 and 9 are allowed.");
 		}
 	}
 }

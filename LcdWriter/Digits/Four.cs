@@ -2,7 +2,7 @@
 {
 	public class Four : Digit
 	{
-		public override char[,] Write()
+		public override char[,] GetDigits()
 		{
 			Digits[1, 0] = '|';
 			Digits[1, 1] = '_';

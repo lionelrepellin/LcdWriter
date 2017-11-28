@@ -44,6 +44,16 @@
   <ItemGroup>
     <Compile Include="DigitFactory.cs" />
     <Compile Include="Digits\Digit.cs" />
+    <Compile Include="Digits\Eight.cs" />
+    <Compile Include="Digits\Five.cs" />
+    <Compile Include="Digits\Four.cs" />
+    <Compile Include="Digits\Nine.cs" />
+    <Compile Include="Digits\One.cs" />
+    <Compile Include="Digits\Seven.cs" />
+    <Compile Include="Digits\Six.cs" />
+    <Compile Include="Digits\Three.cs" />
+    <Compile Include="Digits\Two.cs" />
+    <Compile Include="Digits\Zero.cs" />
     <Compile Include="LcdWriterService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

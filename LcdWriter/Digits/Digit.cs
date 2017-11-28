@@ -26,6 +26,10 @@ namespace LcdWriter.Digits
 			Digits[2, 2] = ' ';
 		}
 
-		public abstract char[,] Write();
+		/// <summary>
+		/// Get digits from number instance
+		/// </summary>
+		/// <returns></returns>
+		public abstract char[,] GetDigits();
 	}
 }

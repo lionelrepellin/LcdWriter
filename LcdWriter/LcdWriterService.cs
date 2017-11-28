@@ -9,15 +9,16 @@ namespace LcdWriter
 		// number of spaces between two numbers
 		private const int Space = 1;
 
-		private readonly List<char[,]> _digits;
-		private readonly int _y;
+		private readonly List<char[,]> _digits;		
 		private readonly DigitFactory _digitFactory;
+		private readonly int _y;
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="input">Input should contains only numbers</param>
 		/// <param name="y">Cursor position (Y axis)</param>
+		/// <param name="digitFactory"></param>
 		public LcdWriterService(string input, int y, DigitFactory digitFactory)
 		{
 			if (string.IsNullOrWhiteSpace(input))
@@ -41,13 +42,13 @@ namespace LcdWriter
 			{
 				if (int.TryParse(c.ToString(), out int result))
 				{
-					var number = _digitFactory.FindById(result);
-					var digit = number.Write();
+					var number = _digitFactory.FindByNumber(result);
+					var digit = number.GetDigits();
 					digits.Add(digit);
 				}
 				else
 				{
-					throw new ArgumentException("Can not parse string to int.");
+					throw new ArgumentException("Can't parse string to int.");
 				}
 			}
 
@@ -98,7 +99,7 @@ namespace LcdWriter
 							}
 							else
 							{
-								// move the cursor to write another digit
+								// move the cursor to write another number
 								var x = (3 + Space) * numberToWrite;
 								Console.SetCursorPosition(x, initialPosition);
 							}
