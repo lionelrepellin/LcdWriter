@@ -12,7 +12,9 @@ namespace LcdWriter
         {
             var input = CheckArgs(args);
 
-            var lcdWriterService = new LcdWriterService(input, Console.CursorTop);
+			var digitFactory = new DigitFactory();
+
+            var lcdWriterService = new LcdWriterService(input, Console.CursorTop, digitFactory);
             lcdWriterService.Write();
 
             Console.ReadKey();
