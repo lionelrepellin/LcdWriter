@@ -57,6 +57,8 @@
     <Compile Include="LcdWriterService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Output\IOutputController.cs" />
+    <Compile Include="Output\StandardOutput.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

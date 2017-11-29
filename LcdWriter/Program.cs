@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LcdWriter.Output;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,8 +14,9 @@ namespace LcdWriter
             var input = CheckArgs(args);
 
 			var digitFactory = new DigitFactory();
+            var standardOutput = new StandardOutput();
 
-            var lcdWriterService = new LcdWriterService(input, Console.CursorTop, digitFactory);
+            var lcdWriterService = new LcdWriterService(input, Console.CursorTop, digitFactory, standardOutput);
             lcdWriterService.Write();
 
             Console.ReadKey();
