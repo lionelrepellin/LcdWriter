@@ -48,7 +48,7 @@ namespace LcdWriter
 				}
 				else
 				{
-					throw new ArgumentException("Can't parse string to int.");
+                    throw new ArgumentException("Can't parse string to int.", nameof(input));
 				}
 			}
 
