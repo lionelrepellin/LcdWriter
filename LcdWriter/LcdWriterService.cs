@@ -21,6 +21,7 @@ namespace LcdWriter
         /// <param name="input">Input should contains only numbers</param>
         /// <param name="y">Cursor position (Y axis)</param>
         /// <param name="digitFactory"></param>
+        /// <param name="outputController">redirect the program output</param> 
         public LcdWriterService(string input, int y, DigitFactory digitFactory, IOutputController outputController)
         {
             if (string.IsNullOrWhiteSpace(input))
