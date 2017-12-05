@@ -13,21 +13,21 @@ namespace LcdWriter
         private readonly List<char[,]> _digits;
         private readonly DigitFactory _digitFactory;
         private readonly IOutputController _outputController;
-        private readonly int _y;
+        private readonly int _yPosition;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="input">Input should contains only numbers</param>
-        /// <param name="y">Cursor position (Y axis)</param>
+        /// <param name="yPosition">Cursor position (Y axis)</param>
         /// <param name="digitFactory"></param>
         /// <param name="outputController">redirect the program output</param> 
-        public LcdWriterService(string input, int y, DigitFactory digitFactory, IOutputController outputController)
+        public LcdWriterService(string input, int yPosition, DigitFactory digitFactory, IOutputController outputController)
         {
             if (string.IsNullOrWhiteSpace(input))
                 throw new ArgumentNullException(nameof(input), "The input string should not be null.");
 
-            _y = y;
+            _yPosition = yPosition;
             _digitFactory = digitFactory;
             _outputController = outputController;
             _digits = ConvertStringToDigits(input);
@@ -65,10 +65,10 @@ namespace LcdWriter
             var initialPosition = 0;
 
             // user was prompted to enter numbers
-            if (_y > 0)
+            if (_yPosition > 0)
             {
                 _outputController.WriteLine();
-                initialPosition = _y + 1;
+                initialPosition = _yPosition + 1;
             }
 
             return initialPosition;
@@ -92,26 +92,29 @@ namespace LcdWriter
 
         private void WriteOne(char[,] digit, int initialPosition, int numberToWrite)
         {
-            for (var row = 0; row < 3; row++)
+            var rowCount = digit.GetLength(0);
+            var columnCount = digit.GetLength(1);
+
+            for (var row = 0; row < rowCount; row++)
             {
-                for (var column = 0; column < 3; column++)
+                for (var column = 0; column < columnCount; column++)
                 {
                     _outputController.Write(digit[row, column]);
 
                     // carrier return
-                    if (column == 2)
+                    if (column == columnCount - 1)
                     {
-                        if (row < 2)
+                        if (row < rowCount - 1)
                         {
                             // move cursor to the next line to write the digit
-                            var x = (3 + Space) * (numberToWrite - 1);
+                            var x = (rowCount + Space) * (numberToWrite - 1);
                             var y = row + 1 + initialPosition;
                             _outputController.SetCursorPosition(x, y);
                         }
                         else
                         {
                             // move the cursor to write another number
-                            var x = (3 + Space) * numberToWrite;
+                            var x = (rowCount + Space) * numberToWrite;
                             _outputController.SetCursorPosition(x, initialPosition);
                         }
                     }
