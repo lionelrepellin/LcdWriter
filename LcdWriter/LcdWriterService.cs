@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LcdWriter.Output;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,6 +12,7 @@ namespace LcdWriter
 
         private readonly List<char[,]> _digits;
         private readonly DigitFactory _digitFactory;
+        private readonly IOutputController _outputController;
         private readonly int _y;
 
         /// <summary>
@@ -19,14 +21,16 @@ namespace LcdWriter
         /// <param name="input">Input should contains only numbers</param>
         /// <param name="y">Cursor position (Y axis)</param>
         /// <param name="digitFactory"></param>
-        public LcdWriterService(string input, int y, DigitFactory digitFactory)
+        /// <param name="outputController">redirect the program output</param> 
+        public LcdWriterService(string input, int y, DigitFactory digitFactory, IOutputController outputController)
         {
             if (string.IsNullOrWhiteSpace(input))
                 throw new ArgumentNullException(nameof(input), "The input string should not be null.");
 
-            _digitFactory = digitFactory;
-            _digits = ConvertStringToDigits(input);
             _y = y;
+            _digitFactory = digitFactory;
+            _outputController = outputController;
+            _digits = ConvertStringToDigits(input);
         }
 
         /// <summary>
@@ -63,7 +67,7 @@ namespace LcdWriter
             // user was prompted to enter numbers
             if (_y > 0)
             {
-                Console.WriteLine();
+                _outputController.WriteLine();
                 initialPosition = _y + 1;
             }
 
@@ -92,7 +96,7 @@ namespace LcdWriter
             {
                 for (var column = 0; column < 3; column++)
                 {
-                    Console.Write(digit[row, column]);
+                    _outputController.Write(digit[row, column]);
 
                     // carrier return
                     if (column == 2)
@@ -102,17 +106,17 @@ namespace LcdWriter
                             // move cursor to the next line to write the digit
                             var x = (3 + Space) * (numberToWrite - 1);
                             var y = row + 1 + initialPosition;
-                            Console.SetCursorPosition(x, y);
+                            _outputController.SetCursorPosition(x, y);
                         }
                         else
                         {
                             // move the cursor to write another number
                             var x = (3 + Space) * numberToWrite;
-                            Console.SetCursorPosition(x, initialPosition);
+                            _outputController.SetCursorPosition(x, initialPosition);
                         }
                     }
                 }
             }
         }
-	}
+    }
 }
